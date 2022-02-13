@@ -13,7 +13,7 @@ def publisher(Laser):
 	space = OpenSpace()
 	space.angle = angle_num
 	space.distance = num
-	pub = rospy.Publisher('open_space', OpenSpace, queue_size = 10)
+	pub = rospy.Publisher(ropsy.get_param("/open_space_publisher/pub_topic", 'open_space'), OpenSpace, queue_size = 10)
 	rate = rospy.Rate(20)
 	while not rospy.is_shutdown():
 		pub.publish(space)
@@ -22,7 +22,7 @@ def publisher(Laser):
 
 def subscriber():
 	rospy.init_node("open_space_publisher")
-	rospy.Subscriber('fake_scan', LaserScan, publisher)
+	rospy.Subscriber(rospy.get_param("/open_space_publisher/sub_topic", 'fake_scan'), LaserScan, publisher)
 	rospy.spin()
 
 if __name__ == '__main__':
